@@ -82,6 +82,7 @@ const PRISM = [ '#a35', '#c66', '#e94', '#ed0', '#9d5', '#4d8', '#2cb', '#0bc', 
 
 // settings defaults
 const DEFAULT_SETTINGS = {
+	rootContainer  : null,
 	alphaBars      : false,
 	ansiBands      : false,
 	barSpace       : 0.1,
@@ -227,7 +228,8 @@ class AudioMotionAnalyzer {
 		this._ownCanvas = ! ( options.canvas instanceof HTMLCanvasElement );
 
 		// Create a new canvas or use the one provided by the user
-		const canvas = this._ownCanvas ? document.createElement('canvas') : options.canvas;
+		const root = options.rootContainer ? options.rootContainer : document;
+		const canvas = this._ownCanvas ? root.createElement('canvas') : options.canvas;
 		canvas.style = 'max-width: 100%;';
 		this._ctx = canvas.getContext('2d');
 
