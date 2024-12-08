@@ -88,6 +88,7 @@ export interface AnalyzerBarData {
 }
 
 export interface ConstructorOptions extends Options {
+  rootContainer: HTMLElement;
   audioCtx?: AudioContext;
   canvas?: HTMLCanvasElement;
   connectSpeakers?: boolean;
