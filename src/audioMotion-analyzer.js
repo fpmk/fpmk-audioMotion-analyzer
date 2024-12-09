@@ -1182,7 +1182,7 @@ class AudioMotionAnalyzer {
 	}
 
 	setNewContainer( newContainer ) {
-		this._container = container;
+		this._container = newContainer;
 		this._defaultWidth  = this._container.clientWidth  || 640;
 		this._defaultHeight = this._container.clientHeight || 270;
 		this._ownCanvas = true;
