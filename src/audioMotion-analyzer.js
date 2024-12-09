@@ -216,7 +216,6 @@ class AudioMotionAnalyzer {
 		this._ownContext = false;
 		this._selectedGrads = [];   // names of the currently selected gradients for channels 0 and 1
 		this._sources = [];			// input nodes
-		this._audioContext = null;			// audio context
 
 		// Check if options object passed as first argument
 		if ( ! ( container instanceof Element ) ) {
@@ -245,15 +244,17 @@ class AudioMotionAnalyzer {
 
 		// Use audio context provided by user, or create a new one
 
-		if ( options.source && ( this._audioContext = options.source.context ) ) {
+		let audioCtx;
+
+		if ( options.source && ( audioCtx = options.source.context ) ) {
 			// get audioContext from provided source audioNode
 		}
-		else if ( this._audioContext = options.audioCtx ) {
+		else if ( audioCtx = options.audioCtx ) {
 			// use audioContext provided by user
 		}
 		else {
 			try {
-				this._audioContext = new ( window.AudioContext || window.webkitAudioContext )();
+				audioCtx = new ( window.AudioContext || window.webkitAudioContext )();
 				this._ownContext = true;
 			}
 			catch( err ) {
@@ -366,8 +367,8 @@ class AudioMotionAnalyzer {
 
 		// Resume audio context if in suspended state (browsers' autoplay policy)
 		const unlockContext = () => {
-			if ( this._audioContext.state == 'suspended' )
-				this._audioContext.resume();
+			if ( audioCtx.state == 'suspended' )
+				audioCtx.resume();
 			window.removeEventListener( EVENT_CLICK, unlockContext );
 		}
 		window.addEventListener( EVENT_CLICK, unlockContext );
@@ -578,7 +579,7 @@ class AudioMotionAnalyzer {
 		if ( value < 1 )
 			throw new AudioMotionError( ERR_FREQUENCY_TOO_LOW );
 		else {
-			this._maxFreq = Math.min( value, this._audioContext.sampleRate / 2 );
+			this._maxFreq = Math.min( value, this.audioCtx.sampleRate / 2 );
 			this._calcBars();
 		}
 	}
