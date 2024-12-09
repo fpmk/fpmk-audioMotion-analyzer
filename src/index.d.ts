@@ -328,7 +328,7 @@ declare class AudioMotionAnalyzer {
   public setOptions(options?: Options): void;
   public setSensitivity(minDecibels: number, maxDecibels: number): void;
 
-  public start(): void;
+  public start(newContainer): void;
   public stop(): void;
 
   public toggleAnalyzer(force?: boolean): boolean;
